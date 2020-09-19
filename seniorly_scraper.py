@@ -88,5 +88,10 @@ def getPricingStartsFrom(soup):
     return soup.find(class_='Span-vzvmw4-0 jYbTJi').get_text().strip()
 
 def getPricingByRoomType(soup):
-    return soup.find(class_='CommunityPricingTable__StyledTable-r1omm4-4 lbwBwC')
+    dt=[]
+    for i in soup.find(class_='CommunityPricingTable__StyledTable-r1omm4-4 lbwBwC').findAll('tr'):
+        for k in i.findAll('td'):
+            dt.append(k.get_text())
 
+
+    dt.rem
