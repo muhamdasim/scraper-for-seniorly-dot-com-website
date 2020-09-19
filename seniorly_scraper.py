@@ -52,4 +52,11 @@ def getCommunityCity(soup):
     return re.sub("[^\w]", " ", data).split()[-3]
 
 def getImages(soup):
-    print(soup.find(class_='ResponsiveImage__ResponsiveWrapper-l4g8bp-0 jscNWe').get('href'))
+    dt=[]
+    for i in soup.findAll(class_='ResponsiveImage__ResponsiveWrapper-l4g8bp-0 jscNWe'):
+        dt.append(i.find('img').get('data-src'))
+
+    return listToString(dt)
+
+def getCommunityContent(soup):
+    return soup.find(class_='CollapsibleBlock__BlockCap-s326rf-1 jhhVKz').find(class_='Paragraph__StyledP-sc-17r02x6-0 ONtKM').get_text().strip()
