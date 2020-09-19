@@ -8,10 +8,13 @@ import pandas as pd
 
 def listToString(s):
     # initialize an empty string
-    str1 = " "
+    str1 =''
 
     # return string
-    return (str1.join(s))
+    for i in s:
+        str1+=i+', '
+
+    return str1[:-2]
 
 def pageRequests(url):
     r=requests.get(url)
@@ -60,3 +63,30 @@ def getImages(soup):
 
 def getCommunityContent(soup):
     return soup.find(class_='CollapsibleBlock__BlockCap-s326rf-1 jhhVKz').find(class_='Paragraph__StyledP-sc-17r02x6-0 ONtKM').get_text().strip()
+
+def getCareTypesProvided(soup):
+    dt=[]
+    for i in soup.find(class_='CommunityCareService__Wrapper-sc-1uu6i2h-0 bDIQtl').findAll(class_='Root-sc-1m9vk1w-0 gCatle Block-sc-1184las-0 IconItem__Wrapper-sc-155qj67-0 ivNDcb'):
+        dt.append(i.find(class_='Root-sc-1m9vk1w-0 gCatle Block-sc-1184las-0 jqgkYL').get_text().strip())
+
+
+
+    return listToString(dt)
+
+
+def getAmenitiesProvided(soup):
+    dt=[]
+    for i in soup.find(class_='CommunityAmenities__Wrapper-sc-1gihmpf-0 RJvAA').findAll(class_='Root-sc-1m9vk1w-0 gCatle Block-sc-1184las-0 IconItem__Wrapper-sc-155qj67-0 ivNDcb'):
+        dt.append(i.find(class_='Root-sc-1m9vk1w-0 gCatle Block-sc-1184las-0 jqgkYL').get_text().strip())
+
+
+
+    return listToString(dt)
+
+
+def getPricingStartsFrom(soup):
+    return soup.find(class_='Span-vzvmw4-0 jYbTJi').get_text().strip()
+
+def getPricingByRoomType(soup):
+    return soup.find(class_='CommunityPricingTable__StyledTable-r1omm4-4 lbwBwC')
+
