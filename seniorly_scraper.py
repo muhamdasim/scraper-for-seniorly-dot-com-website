@@ -59,11 +59,14 @@ def getImages(soup):
     for i in soup.findAll(class_='ResponsiveImage__ResponsiveWrapper-l4g8bp-0 jscNWe'):
         dt.append(i.find('img').get('data-src'))
 
-    return listToString(dt)
+    if not dt:
+        return -1
+    else:
+        return listToString(dt)
 
 def getCommunityContent(soup):
     try:
-        return soup.find(class_='CollapsibleBlock__BlockCap-s326rf-1 jhhVKz').find(class_='Paragraph__StyledP-sc-17r02x6-0 ONtKM').get_text().strip()
+        return soup.find(class_='CollapsibleBlock__BlockCap-s326rf-1 jhhVKz').get_text().strip()
     except:
         return -1
 def getCareTypesProvided(soup):
@@ -95,17 +98,24 @@ def getAmenitiesProvided(soup):
 
 
 def getPricingStartsFrom(soup):
-    return soup.find(class_='Span-vzvmw4-0 jYbTJi').get_text().strip()
+    try:
+        return soup.find(class_='Span-vzvmw4-0 jYbTJi').get_text().strip()
+    except:
+        return -1
 
 def getPricingByRoomType(soup):
-    dt=[]
-    for i in soup.find(class_='CommunityPricingTable__StyledTable-r1omm4-4 lbwBwC').findAll('tr'):
-        for k in i.findAll('td'):
-            dt.append(k.get_text())
+    try:
+        dt=[]
+        for i in soup.find(class_='CommunityPricingTable__StyledTable-r1omm4-4 lbwBwC').findAll('tr'):
+            for k in i.findAll('td'):
+                dt.append(k.get_text())
 
 
-    dt.remove('Type')
-    dt.remove('Average Monthly Cost*')
+        dt.remove('Type')
+        dt.remove('Average Monthly Cost*')
 
-    return listToString(dt)
+        return listToString(dt)
+
+    except:
+        return -1
 
